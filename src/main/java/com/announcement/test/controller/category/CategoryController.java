@@ -48,9 +48,9 @@ import org.springframework.web.bind.annotation.RestController;
     @PostMapping("/categories")
     @Operation(summary = "Create Category", description = "Ability to add a Category")
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Bad request", content = @Content)})
-    public ResponseEntity<CategoryViewModel> createCategory(@PathVariable String accountId, @Valid @RequestBody CategoryCreateRequest categoryCreateRequest) {
+    public ResponseEntity<CategoryViewModel> createCategory(@Valid @RequestBody CategoryCreateRequest categoryCreateRequest) {
 
-      log.info("enter createCategory() :: accountId={}, categoryCreateRequest={}", accountId, categoryCreateRequest);
+      log.info("enter createCategory() :: categoryCreateRequest={}", categoryCreateRequest);
 
       var category = categoryService.createCategory(categoryCreateConverter.convert(categoryCreateRequest));
 
@@ -64,9 +64,9 @@ import org.springframework.web.bind.annotation.RestController;
     @PutMapping("/categories/{categoryId}")
     @Operation(summary = "Update Category", description = "Ability to update a Category")
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Bad request", content = @Content), @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)})
-    public ResponseEntity<CategoryViewModel> updateCategory(@PathVariable String accountId, @PathVariable String categoryId, @Valid @RequestBody CategoryUpdateRequest categoryUpdateRequest) {
+    public ResponseEntity<CategoryViewModel> updateCategory(@PathVariable String categoryId, @Valid @RequestBody CategoryUpdateRequest categoryUpdateRequest) {
 
-      log.info("enter updateCategory() :: accountId={}, categoryId={}, categoryUpdateRequest={}", accountId, categoryId, categoryUpdateRequest);
+      log.info("enter updateCategory() :: categoryId={}, categoryUpdateRequest={}", categoryId, categoryUpdateRequest);
 
       var categoryViewModel = categoryService.updateCategory(categoryUpdateConverter.convert(categoryId, categoryUpdateRequest))
           .filter(Category::isPresent)
@@ -82,13 +82,12 @@ import org.springframework.web.bind.annotation.RestController;
     @GetMapping("/categories")
     @Operation(summary = "Find All Categories", description = "Ability to search all Category")
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Bad request", content = @Content)})
-    public List<CategoryViewModel> getAllCategories(@PathVariable String accountId,
-        @Parameter(description = "this shows the content of selected page, if no page selected, it shows the content of page 0 by default.") @RequestParam(name = "page", defaultValue = "0") int page,
+    public List<CategoryViewModel> getAllCategories(@Parameter(description = "this shows the content of selected page, if no page selected, it shows the content of page 0 by default.") @RequestParam(name = "page", defaultValue = "0") int page,
         @Parameter(description = "it means that how many categories are in a page, if no size selected, it shows 20 categories by default.")@RequestParam(name = "size", defaultValue = "20") int size,
         @RequestParam(name = "isAsc", defaultValue = "true") boolean isAsc,
         @Parameter(description = "it order categories based on their ids") @RequestParam(name = "propertiesName", defaultValue = "id") String propertiesName) {
 
-      log.info("enter getAllCategories() :: accountId={}, page={}, size={}, isAsc={}, propertiesName={}", accountId, page, size, isAsc, propertiesName);
+      log.info("enter getAllCategories() :: page={}, size={}, isAsc={}, propertiesName={}", page, size, isAsc, propertiesName);
 
       var categoryViewModels = categoryService.getAllCategories(pageableConverter.convert(page, size, isAsc, propertiesName))
           .map(categoryConverter::convert)
@@ -102,9 +101,9 @@ import org.springframework.web.bind.annotation.RestController;
     @GetMapping("/categories/{categoryId}")
     @Operation(summary ="Find a Category", description = "Ability to search a Category")
     @ApiResponses(value = {@ApiResponse(responseCode = "400", description = "Bad request", content = @Content), @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)})
-    public ResponseEntity<CategoryViewModel> getCategory(@PathVariable String accountId, @PathVariable String categoryId) {
+    public ResponseEntity<CategoryViewModel> getCategory(@PathVariable String categoryId) {
 
-      log.info("enter getCategory :: accountId={}, categoryId={}", accountId, categoryId);
+      log.info("enter getCategory :: categoryId={}", categoryId);
 
       var categoryViewModel = categoryService.getCategory(categoryId)
           .filter(Category::isPresent)
