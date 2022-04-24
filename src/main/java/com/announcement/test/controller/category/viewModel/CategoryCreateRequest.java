@@ -24,16 +24,10 @@ public class CategoryCreateRequest {
   @Schema(description = "the date of creating a category", example = "2021-12-27T06:30:23.149")
   private LocalDateTime createdDate;
 
-  @Schema(description = "each category can have a parentId, PET category is the parent of MISSING category", example = "618fb5e0f2e63541a5157ea0")
+  @Schema(description = "each category can have a parentId")
   private String parentId;
-
-  @Schema(description = "the url of category which uploaded in another service", example = "https://arvantopman.s3.ir-thr-at1.arvanstorage.com/4fc2d21")
-  private String imageUrl;
+  private String imageId;
 
   @NotNull
-  @Schema(description = "you can put each attributes/feature that is required just for the current category", example = "{\n"
-      + "            \"howMissing\":\"وقت پیاده روی از صدای بوق ماشین ترسید و فرار کرد\"\n" + ",\"longitude\":\"27.2046\"\n" + ",\"latitude\":\"77.4977\"\n"
-      + "             ,\"date\":\"2021-12-14T15:15:46.408881\"\n" + ",\"award\":\"دویست هزار تومن\"\n" + ",\"phoneNumber\":\"09393818888\"\n"
-      + "             ,\"description\":\"\"\n" + "}", required = true)
   private JsonNode schema;
 }

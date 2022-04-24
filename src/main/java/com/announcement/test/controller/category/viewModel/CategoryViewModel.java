@@ -23,13 +23,8 @@ public class CategoryViewModel {
   @Schema(description = "the date of creating a category", example = "2021-12-27T06:30:23.149")
   LocalDateTime createdDate;
 
-  @Schema(description = "each category can have a parentId, PET category is the parent of MISSING category", example = "618fb5e0f2e63541a5157ea0")
+  @Schema(description = "each category can have a parentId")
   String parentId;
-
-  @Schema(description = "the url of category which uploaded in another service", example = "https://arvantopman.s3.ir-thr-at1.arvanstorage.com/4fc2d21")
-  String imageUrl;
-
-  @Schema(description = "this returns the schema we defined in the creating as string", example = "\"howMissing\":\"وقت پیاده روی از صدای بوق ماشین ترسید و فرار کرد\",\"longitude\":\"27.2046\","
-      + "\"latitude\":\"77.4977\" ,\"date\":\"2021-12-14T15:15:46.408881\",\"award\":\"دویست هزار تومن\" ,\"phoneNumber\":\"09393818888\",\"description\":\"\"")
+  String imageId;
   String schema;
 }
